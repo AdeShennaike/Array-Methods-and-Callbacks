@@ -41,11 +41,10 @@ Use the higher-order function called getYears to do the following:
 2. Receive a callback function getFinals from task 2 
 3. Return an array called years containing all of the years in the getFinals data set*/
 
-function getYears(getFinalsCb) {
-    const years = getFinalsCb.map(item => item.Year)
-    return years;
+function getYears(array, getFinalsCB) {
+    return getFinals(array).map(item => item.Year);
 }
-console.log("task 3\n",getYears(getFinals(fifaData)));
+console.log("task 3\n",getYears(fifaData, getFinals));
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 4: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
@@ -55,8 +54,8 @@ Use the higher-order function getWinners to do the following:
 3. Determines the winner (home or away) of each `finals` game. 
 4. Returns the names of all winning countries in an array called `winners` */ 
 
-function getWinners(getFinalsCb) {
-    const winners = getFinalsCb.map(function(item){
+function getWinners(array, getFinalsCb) {
+    const winners = getFinals(array).map(function(item){
         if(item['Home Team Goals'] > item['Away Team Goals']){
             return item['Home Team Name']
         }
@@ -69,7 +68,7 @@ function getWinners(getFinalsCb) {
     });
     return winners;
 }
-console.log("task 4 \n",getWinners(getFinals(fifaData)));
+console.log("task 4 \n",getWinners(fifaData, getFinals));
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 5: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
@@ -83,8 +82,7 @@ hint: the strings returned need to exactly match the string in step 4.
  */
 
 function getWinnersByYear(array, getYearsCb, getWinnersCb) {
-    const finalsWinners = getYearsCb(array).map((item, index) => `In ${getYearsCb(array)[index]}, ${getWinnersCb(array)[index]} won the world cup!`)
-    return finalsWinners;
+    return getYearsCb(array).map((item, index) => `In ${getYearsCb(array)[index]}, ${getWinnersCb(array)[index]} won the world cup!`)
 }
 console.log("task 5 \n", getWinnersByYear(fifaData,getYears,getWinners))
 
@@ -100,7 +98,7 @@ Use the higher order function getAverageGoals to do the following:
 */
 
 function getAverageGoals(getFinalsCb) {
-   const goalAve = getFinalsCb.reduce((goals, item) => goals + item['Home Team Goals'] + item['Away Team Goals'], 0);
+   const goalAve = getFinalsCb.reduce((goals, item) => goals + item['Home Team Goals'] + item['Away Team Goals'],0);
    return (goalAve / getFinals(fifaData).length).toFixed(2);
 }
 
